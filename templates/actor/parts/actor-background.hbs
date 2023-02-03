@@ -1,0 +1,29 @@
+<section class="grid grid-2col">
+  <aside class="sidebar">
+    {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+    use both the "grid" and "grid-Ncol" class where "N" can be any number
+    from 1 to 12 and will create that number of columns. --}}
+    <div class="flexcol">
+      <div class="flex-group-center encapsule">
+        <h3>{{localize 'FORMORIA.Clan'}}</h3>
+        <input type="text" name="system.clan" value="{{system.clan}}" data-dtype="String"
+          class="flexlarge normal-input" />
+      </div>
+      <div class="flex-group-center encapsule">
+        <h3>{{localize 'FORMORIA.Profession'}}</h3>
+        <input type="text" name="system.profession" value="{{system.profession}}" data-dtype="String"
+          class="flexlarge normal-input" />
+      </div>
+    </div>
+    <div class="flex-group-center encapsule">
+      <h3>{{localize 'FORMORIA.Age'}}</h3>
+      <input type="text" name="system.age" value="{{system.age}}" data-dtype="String" class="flexlarge normal-input" />
+    </div>
+  </aside>
+  <aside class="sidebar">
+    <div class="flex-group-center encapsule">
+      <h3>{{localize 'FORMORIA.Ambition'}}</h3>
+      <input type="text" name="system.ambition" value="{{system.ambition}}" data-dtype="String" class="flexlarge normal-input" />
+    </div>
+  </aside>
+</section>

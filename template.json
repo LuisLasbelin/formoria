@@ -1,0 +1,94 @@
+{
+    "Actor": {
+        "types": [
+            "character"
+        ],
+        "character": {
+            "background": {
+                "name": "",
+                "clan": "",
+                "profession": "",
+                "age": "",
+                "ambition": "",
+                "gender-pronouns": ""
+            },
+            "skills": {
+                "brawn": {
+                    "max": "d4",
+                    "current": "d4"
+                },
+                "tactics": {
+                    "max": "d4",
+                    "current": "d4"
+                },
+                "stealth": {
+                    "max": "d4",
+                    "current": "d4"
+                },
+                "caving": {
+                    "max": "d4",
+                    "current": "d4"
+                },
+                "cooking": {
+                    "max": "d4",
+                    "current": "d4"
+                },
+                "language": {
+                    "max": "d4",
+                    "current": "d4"
+                }
+            },
+            "battle-cry": true,
+            "beer": true,
+            "items": [],
+            "stunt": true,
+            "stress": 0,
+            "weapon": []
+        }
+    },
+    "Item": {
+        "types": [
+            "item",
+            "weapon",
+            "treasure",
+            "protection"
+        ],
+        "item": {
+            "name": "",
+            "dice": {
+                "max":"d4",
+                "current":"d4"
+            }
+        },
+        "weapon": {
+            "name": "",
+            "attack": "",
+            "damage": "",
+            "extradamage": "",
+            "traits": [],
+            "attributes": {
+                "brawn": {
+                    "label": "brawn"
+                },
+                "tactics": {
+                    "label": "tactics"
+                },
+                "stealth": {
+                    "label": "stealth"
+                }
+            }
+        },
+        "protection": {
+            "name": "",
+            "defence": "",
+            "durability": "",
+            "modifiers": [{
+                "stealth": 0
+            },
+            {
+                "attack": 0
+            }
+        ]
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+  "id": "formoria",
+  "title": "For Moria!",
+  "description": "For Moria system for Foundry VTT.",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": 10,
+    "verified": "10.287",
+    "maximum": 10
+  },
+  "authors": [{
+    "name": "Luis Belloch"
+  }],
+  "esmodules": ["module/formoria.mjs"],
+  "styles": ["css/formoria.css"],
+  "scripts": [],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    }
+  ],
+  "gridDistance": 2,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "stress",
+  "url": "",
+  "manifest": "",
+  "download": "",
+  "license": "LICENSE.txt",
+  "changelog": "CHANGELOG.md"
+}

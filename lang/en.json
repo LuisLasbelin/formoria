@@ -1,0 +1,35 @@
+{
+  "FORMORIA.Motivations": "Motivations",
+  "FORMORIA.MotivationDuty": "Duty",
+  "FORMORIA.MotivationFaith": "Faith",
+  "FORMORIA.MotivationJustice": "Justice",
+  "FORMORIA.MotivationPower": "Power",
+  "FORMORIA.MotivationTruth": "Truth",
+  "FORMORIA.MotivationMotto": "Motto",
+
+  "FORMORIA.Skills": "Skills",
+  "FORMORIA.SkillCombat": "Combat",
+  "FORMORIA.SkillCommunication": "Communication",
+  "FORMORIA.SkillDiscipline": "Discipline",
+  "FORMORIA.SkillIntelect": "Intelect",
+  "FORMORIA.SkillMovement": "Movement",
+  "FORMORIA.SkillSpecialty": "Specialty",
+
+  "FORMORIA.EffectCreate": "Create Effect",
+  "FORMORIA.EffectToggle": "Toggle Effect",
+  "FORMORIA.EffectEdit": "Edit Effect",
+  "FORMORIA.EffectDelete": "Delete Effect",
+
+  "FORMORIA.Background": "Background",
+  "FORMORIA.Features": "Features",
+  "FORMORIA.Notes": "Notes",
+  "FORMORIA.House": "HOUSE",
+  "FORMORIA.Faction": "FACTION",
+  "FORMORIA.Ambition": "AMBITION",
+  "FORMORIA.Role": "ROLE",
+  "FORMORIA.Determination": "Determination",
+  "FORMORIA.UpgradePoints": "Upgrade Points",
+
+  "FORMORIA.Add": "Add",
+  "FORMORIA.Dice": "Dice"
+}
