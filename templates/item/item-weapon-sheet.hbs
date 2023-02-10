@@ -36,10 +36,10 @@
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
       {{!-- As you add new fields, add them in here! --}}
-      <select class="selectattribute" name="system.attribute.skill" data-type="String">
-        {{#select system.attribute.skill}}
-        {{#each system.attributes as |att key|}}
-        <option value="{{key}}">{{att.label}}</option>
+      <select class="selectattribute" name="system.skill" data-type="String">
+        {{#select system.skill}}
+        {{#each system.skills as |sk key|}}
+        <option value="{{key}}">{{sk.label}}</option>
         {{/each}}
         {{/select}}
       </select>
