@@ -13,7 +13,7 @@ export class ForMoriaActorSheet extends ActorSheet {
       template: "systems/formoria/templates/actor/actor-sheet.hbs",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "items" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
   }
 
@@ -68,12 +68,15 @@ export class ForMoriaActorSheet extends ActorSheet {
     /*
     for (let [k, v] of Object.entries(context.system.motivations)) {
       v.label = game.i18n.localize(CONFIG.FORMORIA.motivations[k]) ?? k;
-    }
+    }*/
     // Handle skills labels.
     for (let [k, v] of Object.entries(context.system.skills)) {
       v.label = game.i18n.localize(CONFIG.FORMORIA.skills[k]) ?? k;
     }
-    */
+    // Hanlde skill iconss
+    for (let [k, v] of Object.entries(context.system.skills)) {
+      v.icon = CONFIG.FORMORIA.skillIcons[k] ?? k;
+    }
   }
 
   /**
@@ -89,6 +92,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     const weapons = [];
     const features = [];
     const protections = [];
+    const dice = CONFIG.FORMORIA.dice
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -111,6 +115,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    context.dice = dice;
     context.protections = protections;
     context.gear = gear;
     context.weapons = weapons;
