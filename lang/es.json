@@ -23,9 +23,15 @@
     "FORMORIA.Add": "Añadir",
     "FORMORIA.Dice": "Dado",
     "FORMORIA.Weapons": "Armas",
+    "FORMORIA.Armor": "Armadura",
     "FORMORIA.Items": "Objetos",
     "FORMORIA.Stress": "Estrés",
     "FORMORIA.Attack": "Ataque",
-    "FORMORIA.Damage": "Daño"
+    "FORMORIA.Damage": "Daño",
+    "FORMORIA.ExtraDamage": "Daño Adicional",
 
+
+    "FORMORIA.Defence": "Defensa",
+    "FORMORIA.Durability": "Durabilidad",
+    "FORMORIA.Modifiers": "Modificadores"
   }

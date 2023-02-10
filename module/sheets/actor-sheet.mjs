@@ -88,6 +88,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     const gear = [];
     const weapons = [];
     const features = [];
+    const protections = [];
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -97,8 +98,11 @@ export class ForMoriaActorSheet extends ActorSheet {
         gear.push(i);
       }
       if (i.type === 'weapon') {
-        i.system.attribute.label = game.i18n.localize(CONFIG.FORMORIA.skills[i.system.attribute.skill]) ?? i.system.attribute.skill;
+        i.system.skillLabel = game.i18n.localize(CONFIG.FORMORIA.skills[i.system.skill]) ?? i.system.skill;
         weapons.push(i);
+      }
+      if (i.type === 'protection') {
+        protections.push(i);
       }
       // Append to features.
       else if (i.type === 'feature') {
@@ -107,6 +111,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    context.protections = protections;
     context.gear = gear;
     context.weapons = weapons;
     context.features = features;

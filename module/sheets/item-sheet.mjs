@@ -42,16 +42,18 @@ export class ForMoriaItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
 
-    // Translate the skills if it is a weapon
-    if(itemData.type === "weapon") {
-      for (let [k, v] of Object.entries(itemData.system.attributes)) {
+    // Translate the skills if it is a weapon or protection
+    if (itemData.type === "weapon" || itemData.type === "protection") {
+      for (let [k, v] of Object.entries(itemData.system.skills)) {
         v.label = game.i18n.localize(CONFIG.FORMORIA.skills[k]) ?? k;
       }
     }
 
+
     // Add the actor's data to context.data for easier access, as well as flags.
     context.system = itemData.system;
     context.flags = itemData.flags;
+    console.log(context.system)
 
     return context;
   }
@@ -66,5 +68,25 @@ export class ForMoriaItemSheet extends ItemSheet {
     if (!this.isEditable) return;
 
     // Roll handlers, click handlers, etc. would go here.
+    // Add Modifier
+    html.find('.mod-create').click(this._onModCreate.bind(this));
+  }
+
+  /**
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
+   * @param {Event} event   The originating click event
+   * @private
+   */
+  async _onModCreate(event) {
+    event.preventDefault();
+    // Retrieve base data structure.
+    const context = super.getData();
+
+    // Use a safe clone of the item data for further operations.
+    const itemData = context.item;
+    console.log(itemData.system.modifiers)
+    itemData.system.modifiers[Object.keys(itemData.system.modifiers).length] = {"mod": "stealth", "value": "0"}
+
+    this.render()
   }
 }
