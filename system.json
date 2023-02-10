@@ -30,9 +30,9 @@
   "gridDistance": 2,
   "gridUnits": "m",
   "primaryTokenAttribute": "stress",
-  "url": "",
-  "manifest": "",
-  "download": "",
+  "url": "https://github.com/Luistorch/formoria",
+  "manifest": "https://raw.githubusercontent.com/Luistorch/formoria/master/system.json",
+  "download": "https://github.com/Luistorch/formoria/archive/refs/tags/main.zip",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"
 }
