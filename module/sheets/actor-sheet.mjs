@@ -1,4 +1,4 @@
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -191,7 +191,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     delete itemData.system["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
   /**
@@ -211,15 +211,55 @@ export class ForMoriaActorSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
       }
-    }
 
-    // Handle item rolls.
-    if (dataset.rollType) {
       if (dataset.rollType == 'weapon') {
         console.log("Rolling weapon")
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
+      }
+
+      if (dataset.rollType == 'battlecry') {
+        let message = game.i18n.localize('FORMORIA.Shouts')
+        let chatData = {
+          user: game.user._id,
+          speaker: this.actor.name,
+          content : `<h2>${this.actor.name}</h2><p>${message}</p>`
+          };
+        
+        ChatMessage.create(chatData,{});
+      }
+
+      if (dataset.rollType == 'skill') {
+        console.log("Rolling skill " + dataset.skill + " for " + this.actor.name)
+
+        let mod = 0
+
+        this.actor.items.forEach(item => {
+          if (item.type == "protection") {
+            for (let i = 0; i < Object.keys(item.system.modifiers).length; i++) {
+              if (item.system.modifiers[i].mod == dataset.skill) {
+                mod = item.system.modifiers[i].value
+                // Adds a + if there is none
+                if (mod[0] != "+" || mod[0] != "-") {
+                  mod = "+" + mod
+                }
+              }
+            }
+          }
+        });
+
+        let rollFormula = `${this.actor.system.skills[dataset.skill].current}${mod}` 
+        console.log(rollFormula)
+
+        let label = dataset.label;
+        let roll = new Roll(rollFormula, this.actor.getRollData());
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label,
+          rollMode: game.settings.get('core', 'rollMode'),
+        });
+        return roll;
       }
     }
 
