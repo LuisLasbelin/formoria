@@ -57,14 +57,14 @@ export class ForMoriaItem extends Item {
 
       if (this.type === "weapon") {
         rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack;
-        
+
         // Create label to show weapon traits
-        for (let [k, v] of Object.entries(rollData.item.traits)) {
-          let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".label");
-          let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".description");
-          let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".type");
+        rollData.item.traits.forEach(v => {
+          let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].label);
+          let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].description);
+          let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraitsTypes[v.type]);
           traitsLabel += `<h3>${traitName} (${type})</h3><p>${description}</p>`
-        }
+        });
       }
       else {
         rollString = rollData.item.dice;
@@ -73,7 +73,7 @@ export class ForMoriaItem extends Item {
       const roll = new Roll(rollString, rollData);
 
       // If you need to store the value first, uncomment the next line.
-      let result = await roll.roll({async: true});
+      let result = await roll.roll({ async: true });
       roll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
@@ -93,13 +93,13 @@ export class ForMoriaItem extends Item {
 
   calculateDamage(item, result) {
     // Damage calculations
-    if(result > 2) {
+    if (result > 2) {
       // get base damage
       let damage = parseInt(item.damage);
       // Calculate extra damage
       let extra = result - 5;
       let extradamage = 0
-      if(extra > 0){
+      if (extra > 0) {
         extradamage = extra * item.extradamage;
       }
       // add up numbers
@@ -124,5 +124,48 @@ export class ForMoriaItem extends Item {
     console.log(traits)
 
     await this.update({ ["system.traits"]: traits });
+  }
+
+  /**
+   * Remove the last trait trait for the weapon
+   */
+  async removeTrait() {
+    const item = this
+    let traits = item.system.traits
+    traits.pop()
+
+    console.log(traits)
+
+    await this.update({ ["system.traits"]: traits });
+  }
+
+  /**
+   * Creates a new modifier for the item
+   * @param {*} data contains name with {skill, modifier}
+   */
+  async addModifier(data) {
+    const item = this
+    let modifiers = item.system.modifiers
+    modifiers.push({
+      "mod": data.skill,
+      "value": data.value
+    });
+
+    console.log(modifiers)
+
+    await this.update({ ["system.modifiers"]: modifiers });
+  }
+
+  /**
+   * Remove the last modifier for the weapon
+   */
+  async removeModifier() {
+    const item = this
+    let modifiers = item.system.modifiers
+    modifiers.pop()
+
+    console.log(modifiers)
+
+    await this.update({ ["system.modifiers"]: modifiers });
   }
 }

@@ -50,13 +50,18 @@ FORMORIA.weaponTraits = {
   },
   "crossbow": {
     "label": 'FORMORIA.WeaponTraits.crossbow.label',
-    "type": 'pot',
+    "type": 'pa',
     "description": 'FORMORIA.WeaponTraits.crossbow.description',
   },
   "mithril": {
     "label": 'FORMORIA.WeaponTraits.mithril.label',
     "type": 'pa',
     "description": 'FORMORIA.WeaponTraits.mithril.description',
+  },
+  "2h": {
+    "label": 'FORMORIA.WeaponTraits.2h.label',
+    "type": 'pa',
+    "description": 'FORMORIA.WeaponTraits.2h.description',
   }
 }
 

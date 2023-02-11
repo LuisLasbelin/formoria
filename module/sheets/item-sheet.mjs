@@ -42,11 +42,19 @@ export class ForMoriaItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
 
+    let skills = {}
     // Translate the skills if it is a weapon or protection
     if (itemData.type === "weapon" || itemData.type === "protection") {
-      for (let [k, v] of Object.entries(itemData.system.skills)) {
-        v.label = game.i18n.localize(CONFIG.FORMORIA.skills[k]) ?? k;
+      for (let [k, v] of Object.entries(CONFIG.FORMORIA.skills)) {
+        skills[k] = {"label": game.i18n.localize(v)};
       }
+    }
+
+    // Translate modifiers of protection items
+    if(itemData.type === "protection") {
+      itemData.system.modifiers.forEach(mod => {
+        mod.label = game.i18n.localize(CONFIG.FORMORIA.skills[mod.mod]) ?? mod.mod;
+      });
     }
 
     let weaponTraits = []
@@ -70,6 +78,7 @@ export class ForMoriaItemSheet extends ItemSheet {
 
     // Add the actor's data to context.data for easier access, as well as flags.
     itemData.system.weaponTraits = weaponTraits;
+    itemData.system.skills = skills
     context.system = itemData.system;
     context.flags = itemData.flags;
     console.log(context.system)
@@ -94,26 +103,16 @@ export class ForMoriaItemSheet extends ItemSheet {
 
     // Delete Weapon Trait
     html.find('.trait-remove').click(ev => {
-      ev.preventDefault();
-      const context = super.getData();
-      // Use a safe clone of the item data for further operations.
-      const itemData = context.item;
-      itemData.system.traits.pop()
-
-      console.log("Removed trait")
-
-      this.render()
+      const target = $(ev.currentTarget);
+      // remove the trait in item.mjs
+      this.item.removeTrait()
     });
 
     // Delete Modifier
     html.find('.mod-delete').click(ev => {
-      ev.preventDefault();
-      const context = super.getData();
-      // Use a safe clone of the item data for further operations.
-      const itemData = context.item;
-      delete itemData.system.modifiers[Object.keys(itemData.system.modifiers).length - 1]
-
-      this.render()
+      const target = $(ev.currentTarget);
+      // remove the trait in item.mjs
+      this.item.removeModifier()
     });
 
   }
@@ -125,16 +124,16 @@ export class ForMoriaItemSheet extends ItemSheet {
    */
   async _onModCreate(event) {
     event.preventDefault();
-    // Retrieve base data structure.
-    const context = super.getData();
+    const target = $(event.currentTarget);
+    const skill = document.getElementById('mod-skill').value
+    const value = document.getElementById('mod-value').value
 
-    // Use a safe clone of the item data for further operations.
-    const itemData = context.item;
-    console.log(itemData.system.modifiers)
-    itemData.system.modifiers[Object.keys(itemData.system.modifiers).length] = { "mod": "stealth", "value": "0" }
+    // adds the trait in item.mjs
+    this.item.addModifier({
+      "skill": skill,
+      "value": value
+    });
 
-    this.render(true)
-    this.actor.render()
   }
 
   /**

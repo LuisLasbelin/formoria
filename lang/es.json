@@ -39,7 +39,7 @@
   "FORMORIA.Description": "Descripción",
   "FORMORIA.WeaponTraits": {
     "pa": "PA",
-    "pot": "POT",
+    "pot": "POT (>7)",
     "elven" : {
       "label" : "Élfica",
       "description": "Se ilumina con un brillo tenue cuando hay orcos cerca."
@@ -67,6 +67,10 @@
     "mithril" : {
       "label" : "Mithril",
       "description": "Si es un Arma ignora defensas excepto magia o mithril. Si de Protección otorga +1 Defensa."
+    },
+    "2h" : {
+      "label" : "2M",
+      "description": "Debe empuñarse con 2 manos."
     }
   }
 }

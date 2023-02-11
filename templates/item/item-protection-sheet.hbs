@@ -46,21 +46,22 @@
       </div>
       <div class="resource">
         <label class="resource-label">{{localize 'FORMORIA.Modifiers'}}</label>
-        {{#each system.modifiers}}
-        <div class="resource modifier">
-          <select class="selectattribute" name="system.modifiers.{{@index}}.mod" data-type="String">
-            {{#select this.mod}}
-            {{#each ../system.skills as |sk key|}}
+        <div class="resource">
+          <select class="selectattribute" id="mod-skill" data-type="String">
+            {{#each system.skills as |sk key|}}
             <option value="{{key}}">{{sk.label}}</option>
             {{/each}}
-            {{/select}}
           </select>
-          <input type="text" name="system.modifiers.{{@index}}.value" value="{{this.value}}" data-dtype="String" />
+          <input type="text" id="mod-value" value="{{this.value}}" data-dtype="String" />
         </div>
-        {{/each}}
         <a class="item-control mod-create" title="Add modifier"><i class="fas fa-plus"></i>{{localize 'FORMORIA.Add'}}</a>
         <a class="item-control mod-delete" title="Remove modifier"><i class="fas fa-trash"></i></a>
       </div>
+      {{#each system.modifiers as |mod id|}}
+      <div class="resource modifier">
+        <h3>{{mod.label}} {{mod.value}}</h3>
+      </div>
+      {{/each}}
     </div>
   </section>
 </form>

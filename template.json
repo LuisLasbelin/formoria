@@ -56,30 +56,6 @@
             "treasure",
             "protection"
         ],
-        "templates": {
-            "skills": {
-                "skills" : {
-                    "brawn": {
-                        "label": "brawn"
-                    },
-                    "tactics": {
-                        "label": "tactics"
-                    },
-                    "stealth": {
-                        "label": "stealth"
-                    },
-                    "caving": {
-                        "label": "caving"
-                    },
-                    "cooking": {
-                        "label": "cooking"
-                    },
-                    "language": {
-                        "label": "language"
-                    }
-                }
-            }
-        },
         "item": {
             "name": "",
             "dice": {
@@ -88,7 +64,6 @@
             }
         },
         "weapon": {
-            "templates": ["skills"],
             "name": "",
             "skill": "brawn",
             "attack": "0",
@@ -97,16 +72,10 @@
             "traits": []
         },
         "protection": {
-            "templates": ["skills"],
             "name": "",
             "defence": "0",
             "durability": "0",
-            "modifiers": {
-                "0": {
-                    "mod": "stealth",
-                    "value": ""
-                }
-            }
+            "modifiers": []
         }
     }
 }
