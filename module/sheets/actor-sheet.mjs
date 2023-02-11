@@ -240,20 +240,27 @@ export class ForMoriaActorSheet extends ActorSheet {
             for (let i = 0; i < Object.keys(item.system.modifiers).length; i++) {
               if (item.system.modifiers[i].mod == dataset.skill) {
                 mod = item.system.modifiers[i].value
-                // Adds a + if there is none
-                if (mod[0] != "+" || mod[0] != "-") {
-                  mod = "+" + mod
-                }
               }
             }
           }
         });
 
-        let rollFormula = `${this.actor.system.skills[dataset.skill].current}${mod}` 
-        console.log(rollFormula)
+        let roll
+        const t1 = new Die(this.actor.system.skills[dataset.skill].current);
+        if(mod > 0) {
+          const plus = new OperatorTerm({operator: "+"});
+          const t2 = new NumericTerm({number: mod});
+          roll = Roll.fromTerms([t1, plus, t2]);
+        }
+        else if(mod < 0) {
+          const t2 = new NumericTerm({number: mod});
+          roll = Roll.fromTerms([t1, t2]);
+        }
+        else {
+          roll = Roll.fromTerms([t1]);
+        }
 
         let label = dataset.label;
-        let roll = new Roll(rollFormula, this.actor.getRollData());
         roll.toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor: label,
