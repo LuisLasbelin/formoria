@@ -246,7 +246,7 @@ export class ForMoriaActorSheet extends ActorSheet {
         });
 
         let roll
-        const t1 = new Die(this.actor.system.skills[dataset.skill].current);
+        const t1 = new Die({number: 1, faces: parseInt(this.actor.system.skills[dataset.skill].current.split("d")[1])});
         if(mod > 0) {
           const plus = new OperatorTerm({operator: "+"});
           const t2 = new NumericTerm({number: mod});
