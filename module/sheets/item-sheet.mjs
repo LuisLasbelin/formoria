@@ -70,6 +70,18 @@ export class ForMoriaItemSheet extends ItemSheet {
     // Roll handlers, click handlers, etc. would go here.
     // Add Modifier
     html.find('.mod-create').click(this._onModCreate.bind(this));
+
+    // Delete Inventory Item
+    html.find('.mod-delete').click(ev => {
+      ev.preventDefault();
+      const context = super.getData();
+      // Use a safe clone of the item data for further operations.
+      const itemData = context.item;
+      delete itemData.system.modifiers[Object.keys(itemData.system.modifiers).length - 1]
+
+      this.render()
+    });
+
   }
 
   /**
@@ -85,7 +97,7 @@ export class ForMoriaItemSheet extends ItemSheet {
     // Use a safe clone of the item data for further operations.
     const itemData = context.item;
     console.log(itemData.system.modifiers)
-    itemData.system.modifiers[Object.keys(itemData.system.modifiers).length] = {"mod": "stealth", "value": "0"}
+    itemData.system.modifiers[Object.keys(itemData.system.modifiers).length] = { "mod": "stealth", "value": "0" }
 
     this.render()
   }

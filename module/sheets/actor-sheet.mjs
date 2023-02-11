@@ -1,4 +1,4 @@
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../helpers/effects.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -13,7 +13,7 @@ export class ForMoriaActorSheet extends ActorSheet {
       template: "systems/formoria/templates/actor/actor-sheet.hbs",
       width: 600,
       height: 600,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "items" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "skills" }]
     });
   }
 
@@ -68,12 +68,15 @@ export class ForMoriaActorSheet extends ActorSheet {
     /*
     for (let [k, v] of Object.entries(context.system.motivations)) {
       v.label = game.i18n.localize(CONFIG.FORMORIA.motivations[k]) ?? k;
-    }
+    }*/
     // Handle skills labels.
     for (let [k, v] of Object.entries(context.system.skills)) {
       v.label = game.i18n.localize(CONFIG.FORMORIA.skills[k]) ?? k;
     }
-    */
+    // Hanlde skill iconss
+    for (let [k, v] of Object.entries(context.system.skills)) {
+      v.icon = CONFIG.FORMORIA.skillIcons[k] ?? k;
+    }
   }
 
   /**
@@ -89,6 +92,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     const weapons = [];
     const features = [];
     const protections = [];
+    const dice = CONFIG.FORMORIA.dice
 
     // Iterate through items, allocating to containers
     for (let i of context.items) {
@@ -111,6 +115,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     }
 
     // Assign and return
+    context.dice = dice;
     context.protections = protections;
     context.gear = gear;
     context.weapons = weapons;
@@ -186,7 +191,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     delete itemData.system["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, {parent: this.actor});
+    return await Item.create(itemData, { parent: this.actor });
   }
 
   /**
@@ -206,15 +211,62 @@ export class ForMoriaActorSheet extends ActorSheet {
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
       }
-    }
 
-    // Handle item rolls.
-    if (dataset.rollType) {
       if (dataset.rollType == 'weapon') {
         console.log("Rolling weapon")
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);
         if (item) return item.roll();
+      }
+
+      if (dataset.rollType == 'battlecry') {
+        let message = game.i18n.localize('FORMORIA.Shouts')
+        let chatData = {
+          user: game.user._id,
+          speaker: this.actor.name,
+          content : `<h2>${this.actor.name}</h2><p>${message}</p>`
+          };
+        
+        ChatMessage.create(chatData,{});
+      }
+
+      if (dataset.rollType == 'skill') {
+        console.log("Rolling skill " + dataset.skill + " for " + this.actor.name)
+
+        let mod = 0
+
+        this.actor.items.forEach(item => {
+          if (item.type == "protection") {
+            for (let i = 0; i < Object.keys(item.system.modifiers).length; i++) {
+              if (item.system.modifiers[i].mod == dataset.skill) {
+                mod = item.system.modifiers[i].value
+              }
+            }
+          }
+        });
+
+        let roll
+        const t1 = new Die({number: 1, faces: parseInt(this.actor.system.skills[dataset.skill].current.split("d")[1])});
+        if(mod > 0) {
+          const plus = new OperatorTerm({operator: "+"});
+          const t2 = new NumericTerm({number: mod});
+          roll = Roll.fromTerms([t1, plus, t2]);
+        }
+        else if(mod < 0) {
+          const t2 = new NumericTerm({number: mod});
+          roll = Roll.fromTerms([t1, t2]);
+        }
+        else {
+          roll = Roll.fromTerms([t1]);
+        }
+
+        let label = dataset.label;
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: label,
+          rollMode: game.settings.get('core', 'rollMode'),
+        });
+        return roll;
       }
     }
 

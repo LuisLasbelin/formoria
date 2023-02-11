@@ -1,72 +1,32 @@
-<section class="grid grid-2col">
-    <aside class="sidebar">
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Brawn'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.brawn.max" value="{{system.skills.brawn.max}}" data-dtype="String"
-                    class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.brawn.current" value="{{system.skills.brawn.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
+<section class="fill-balance">
+    {{#each system.skills as |skill id|}}
+    <div class="flexcol">
+        <div class="flex-group-center encapsule">
+            <h3>{{skill.label}}</h3>
+            <div class="flexrow">
+                <span class="skill-image">
+                    <a class="rollable" data-roll-type="skill" data-skill="{{id}}" data-label="<h2>{{skill.label}}</h2>"><img class="skill-icon"
+                            src="{{skill.icon}}" title="{{skill.label}}" /></a>
+                </span>
+                <div>{{localize 'FORMORIA.Max'}}</div>
+                <select class="selectattribute" name="system.skills.{{id}}.max" data-type="String">
+                    {{#select skill.max}}
+                    {{#each ../dice as |d did|}}
+                    <option value="{{d}}">{{d}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+
+                <div>{{localize 'FORMORIA.Current'}}</div>
+                <select class="selectattribute" name="system.skills.{{id}}.current" data-type="String">
+                    {{#select skill.current}}
+                    {{#each ../dice as |d did|}}
+                    <option value="{{d}}">{{d}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
             </div>
         </div>
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Tactics'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.tactics.max" value="{{system.skills.tactics.max}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.tactics.current" value="{{system.skills.tactics.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-            </div>
-        </div>
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Stealth'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.stealth.max" value="{{system.skills.stealth.max}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.stealth.current" value="{{system.skills.stealth.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-            </div>
-        </div>
-    </aside>
-    <aside class="sidebar">
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Caving'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.caving.max" value="{{system.skills.caving.max}}" data-dtype="String"
-                    class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.caving.current" value="{{system.skills.caving.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-            </div>
-        </div>
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Cooking'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.cooking.max" value="{{system.skills.cooking.max}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.cooking.current" value="{{system.skills.cooking.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-            </div>
-        </div>
-        <div class="flexcol">
-            <div class="flex-group-center encapsule">
-                <h3>{{localize 'FORMORIA.Language'}}</h3>
-                {{localize 'FORMORIA.Max'}}
-                <input type="text" name="system.skills.language.max" value="{{system.skills.language.max}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-                {{localize 'FORMORIA.Current'}}
-                <input type="text" name="system.skills.language.current" value="{{system.skills.language.current}}"
-                    data-dtype="String" class="flexlarge normal-input" />
-            </div>
-        </div>
-    </aside>
+    </div>
+    {{/each}}
 </section>
