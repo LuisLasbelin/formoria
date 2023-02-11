@@ -37,7 +37,7 @@ export class ForMoriaItem extends Item {
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     const rollMode = game.settings.get('core', 'rollMode');
-    const label = `${item.name}`;
+    let label = `<h2>${item.name}</h2>`;
 
     // If there's no roll data, send a chat message.
     if (this.system.dice) {
@@ -53,9 +53,18 @@ export class ForMoriaItem extends Item {
       // Retrieve roll data.
       const rollData = this.getRollData();
       let rollString = ""
+      let traitsLabel = ""
 
       if (this.type === "weapon") {
-        rollString = this.actor.system.skills[rollData.item.attribute.skill].current + "+" + rollData.item.attack;
+        rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack;
+        
+        // Create label to show weapon traits
+        for (let [k, v] of Object.entries(rollData.item.traits)) {
+          let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".label");
+          let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".description");
+          let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name]+ ".type");
+          traitsLabel += `<h3>${traitName} (${type})</h3><p>${description}</p>`
+        }
       }
       else {
         rollString = rollData.item.dice;
@@ -68,7 +77,7 @@ export class ForMoriaItem extends Item {
       roll.toMessage({
         speaker: speaker,
         rollMode: rollMode,
-        flavor: label,
+        flavor: label + traitsLabel,
       });
       // Damage calculations
       let totaldamage = this.calculateDamage(rollData.item, result.total)
@@ -76,7 +85,7 @@ export class ForMoriaItem extends Item {
         speaker: speaker,
         rollMode: rollMode,
         flavor: label,
-        content: "Damage: " + totaldamage
+        content: `${game.i18n.localize('FORMORIA.Damage')}: ` + totaldamage
       });
       return roll;
     }
@@ -98,5 +107,22 @@ export class ForMoriaItem extends Item {
       return totaldamage;
     }
     return 0
+  }
+
+  /**
+   * Creates a new trait for the weapon
+   * @param {*} data contains name which is the trait key
+   */
+  async addTrait(data) {
+    const item = this
+    let traits = item.system.traits
+    traits.push({
+      "name": data.name,
+      "type": CONFIG.FORMORIA.weaponTraits[data.name].type
+    });
+
+    console.log(traits)
+
+    await this.update({ ["system.traits"]: traits });
   }
 }

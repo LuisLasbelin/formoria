@@ -22,6 +22,49 @@ FORMORIA.skillIcons = {
   "language": "icons/skills/trades/music-singing-voice-blue.webp",
 }
 
+FORMORIA.weaponTraits = {
+  "elven": {
+    "label": 'FORMORIA.WeaponTraits.elven.label',
+    "type": 'pa',
+    "description": 'FORMORIA.WeaponTraits.elven.description',
+  },
+  "blessed": {
+    "label": 'FORMORIA.WeaponTraits.blessed.label',
+    "type": 'pa',
+    "description": 'FORMORIA.WeaponTraits.blessed.description',
+  },
+  "masterwork": {
+    "label": 'FORMORIA.WeaponTraits.masterwork.label',
+    "type": 'pa',
+    "description": 'FORMORIA.WeaponTraits.masterwork.description',
+  },
+  "beasthunter": {
+    "label": 'FORMORIA.WeaponTraits.beasthunter.label',
+    "type": 'pot',
+    "description": 'FORMORIA.WeaponTraits.beasthunter.description',
+  },
+  "cruel": {
+    "label": 'FORMORIA.WeaponTraits.cruel.label',
+    "type": 'pot',
+    "description": 'FORMORIA.WeaponTraits.cruel.description',
+  },
+  "crossbow": {
+    "label": 'FORMORIA.WeaponTraits.crossbow.label',
+    "type": 'pot',
+    "description": 'FORMORIA.WeaponTraits.crossbow.description',
+  },
+  "mithril": {
+    "label": 'FORMORIA.WeaponTraits.mithril.label',
+    "type": 'pa',
+    "description": 'FORMORIA.WeaponTraits.mithril.description',
+  }
+}
+
+FORMORIA.weaponTraitsTypes = {
+  "pa": "FORMORIA.WeaponTraits.pa",
+  "pot": "FORMORIA.WeaponTraits.pot",
+}
+
 /**
  * The set of Skills used within the sytem.
  * @type {Object}

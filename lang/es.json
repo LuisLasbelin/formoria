@@ -30,5 +30,43 @@
   "FORMORIA.Shouts": "¡Grita con todas sus fuerzas! Todos recuperan sus habilidades y Crítico pero el Peligro aumenta.",
   "FORMORIA.Defence": "Defensa",
   "FORMORIA.Durability": "Durabilidad",
-  "FORMORIA.Modifiers": "Modificadores"
+  "FORMORIA.Modifiers": "Modificadores",
+  "FORMORIA.Skill": "Habilidad",
+  "FORMORIA.Traits": "Atributos",
+  "FORMORIA.Amount": "Cantidad",
+  "FORMORIA.Weigth": "Peso",
+  "FORMORIA.Attributes": "Atributos",
+  "FORMORIA.Description": "Descripción",
+  "FORMORIA.WeaponTraits": {
+    "pa": "PA",
+    "pot": "POT",
+    "elven" : {
+      "label" : "Élfica",
+      "description": "Se ilumina con un brillo tenue cuando hay orcos cerca."
+    },
+    "blessed" : {
+      "label" : "Bendita",
+      "description": "Evita 1 de Estrés de daño por magia maligna cada hora."
+    },
+    "masterwork" : {
+      "label" : "Obra Maestra",
+      "description": "Suma +1 al Ataque."
+    },
+    "beasthunter" : {
+      "label" : "Cazabestias",
+      "description": "Aplica un veneno que inflige 2 de Daño cada minuto."
+    },
+    "cruel" : {
+      "label" : "Cruel",
+      "description": "Inflige +2 de Daño base. Su aspecto es inquietante."
+    },
+    "crossbow" : {
+      "label" : "Ballesta",
+      "description": "Tipo de arco mecánico. Recibe +1 a la tirada y +2 al Daño base. Requiere Recargar."
+    },
+    "mithril" : {
+      "label" : "Mithril",
+      "description": "Si es un Arma ignora defensas excepto magia o mithril. Si de Protección otorga +1 Defensa."
+    }
+  }
 }

@@ -1,11 +1,12 @@
 <ol class="items-list">
+  <!-- WEAPONS -->
   <li class="item flexrow items-header">
     <div class="item-name">{{localize "FORMORIA.Weapons"}}</div>
+    <div class="item-formula">{{localize "FORMORIA.Traits"}}</div>
     <div class="item-formula">{{localize "FORMORIA.Attack"}}</div>
     <div class="item-formula">{{localize "FORMORIA.Damage"}}</div>
     <div class="item-controls">
-      <a class="item-control item-create" title="Create item" data-type="weapon"><i class="fas fa-plus"></i> Add
-        item</a>
+      <a class="item-control item-create" title="Create item" data-type="weapon"><i class="fas fa-plus"></i>{{localize 'FORMORIA.Add'}}</a>
     </div>
   </li>
   {{#each weapons as |item id|}}
@@ -17,6 +18,12 @@
       </div>
       <h4>{{item.name}} {{#if item.system.quantity}} x{{item.system.quantity}} {{/if}}</h4>
     </div>
+    <div class="item-formula item-prop">
+      {{#each item.system.traits as |trait id|}}
+      {{log trait.label}}
+      {{trait.label}}
+      {{/each}}
+    </div>
     <div class="item-formula item-prop">{{item.system.skillLabel}}+{{item.system.attack}}</div>
     <div class="item-formula item-prop">{{item.system.damage}}+{{item.system.extradamage}}(>5)</div>
     <div class="item-controls">
@@ -26,20 +33,20 @@
   </li>
   {{/each}}
   <br>
+  <!-- ARMOR -->
   <li class="item flexrow items-header">
     <div class="item-name">{{localize "FORMORIA.Armor"}}</div>
     <div class="item-formula">{{localize "FORMORIA.Defence"}}</div>
     <div class="item-formula">{{localize "FORMORIA.Durability"}}</div>
     <div class="item-controls">
-      <a class="item-control item-create" title="Create item" data-type="protection"><i class="fas fa-plus"></i> Add
-        item</a>
+      <a class="item-control item-create" title="Create item" data-type="protection"><i class="fas fa-plus"></i> {{localize 'FORMORIA.Add'}}</a>
     </div>
   </li>
   {{#each protections as |item id|}}
   <li class="item flexrow" data-item-id="{{item._id}}">
     <div class="item-name">
       <div class="item-image">
-        <a class="rollable" data-roll-type="weapon"><img src="{{item.img}}" title="{{item.name}}" width="24"
+        <a class="rollable" data-roll-type="protection"><img src="{{item.img}}" title="{{item.name}}" width="24"
             height="24" /></a>
       </div>
       <h4>{{item.name}} {{#if item.system.quantity}} x{{item.system.quantity}} {{/if}}</h4>
@@ -53,13 +60,13 @@
   </li>
   {{/each}}
   <br>
+  <!-- COMMON ITEMS -->
   <h3>{{gear.length}}/5</h3>
   <li class="item flexrow items-header">
     <div class="item-name">{{localize "FORMORIA.Items"}}</div>
     <div class="item-formula">{{localize "FORMORIA.Dice"}}</div>
     <div class="item-controls">
-      <a class="item-control item-create" title="Create modifier" data-type="item"><i class="fas fa-plus"></i> Add
-        item</a>
+      <a class="item-control item-create" title="Create modifier" data-type="item"><i class="fas fa-plus"></i> {{localize 'FORMORIA.Add'}}</a>
     </div>
   </li>
   {{#each gear as |item id|}}
