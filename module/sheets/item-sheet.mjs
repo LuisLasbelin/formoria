@@ -42,14 +42,6 @@ export class ForMoriaItemSheet extends ItemSheet {
       context.rollData = actor.getRollData();
     }
 
-    let skills = {}
-    // Translate the skills if it is a weapon or protection
-    if (itemData.type === "weapon" || itemData.type === "protection") {
-      for (let [k, v] of Object.entries(CONFIG.FORMORIA.skills)) {
-        skills[k] = {"label": game.i18n.localize(v)};
-      }
-    }
-
     // Translate modifiers of protection items
     if(itemData.type === "protection") {
       itemData.system.modifiers.forEach(mod => {
@@ -57,9 +49,15 @@ export class ForMoriaItemSheet extends ItemSheet {
       });
     }
 
+    let skills = {}
     let weaponTraits = []
     // Translate and prepare weapon traits
-    if (itemData.type === "weapon") {
+    if (itemData.type === "weapon" || itemData.type === "protection") {
+      // translated skills
+      for (let [k, v] of Object.entries(CONFIG.FORMORIA.skills)) {
+        skills[k] = {"label": game.i18n.localize(v)};
+      }
+
       for (let [k, v] of Object.entries(CONFIG.FORMORIA.weaponTraits)) {
         weaponTraits.push({
           "key": k,

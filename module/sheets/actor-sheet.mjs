@@ -104,6 +104,9 @@ export class ForMoriaActorSheet extends ActorSheet {
         weapons.push(i);
       }
       if (i.type === 'protection') {
+        i.system.traits.forEach(trait => {
+          trait.label = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[trait.name].label)
+        });
         protections.push(i);
       }
       // Append to features.
@@ -210,7 +213,7 @@ export class ForMoriaActorSheet extends ActorSheet {
         if (item) return item.roll();
       }
 
-      if (dataset.rollType == 'weapon') {
+      if (dataset.rollType == 'weapon' || dataset.rollType == "protection") {
         console.log("Rolling weapon")
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);

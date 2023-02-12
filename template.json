@@ -74,8 +74,13 @@
         "protection": {
             "name": "",
             "defence": "0",
-            "durability": "0",
-            "modifiers": []
+            "durability": {
+                "min": 0,
+                "max": 10,
+                "value": 10
+            },
+            "modifiers": [],
+            "traits": []
         }
     }
 }

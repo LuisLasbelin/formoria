@@ -32,6 +32,8 @@ export class ForMoriaItem extends Item {
    * @private
    */
   async roll() {
+    console.log("Rolling!")
+
     const item = this;
 
     // Initialize chat data.
@@ -39,36 +41,21 @@ export class ForMoriaItem extends Item {
     const rollMode = game.settings.get('core', 'rollMode');
     let label = `<h2>${item.name}</h2>`;
 
-    // If there's no roll data, send a chat message.
-    if (this.system.dice) {
-      ChatMessage.create({
-        speaker: speaker,
-        rollMode: rollMode,
-        flavor: label,
-        content: item.system.description ?? ''
+    // Retrieve roll data.
+    const rollData = this.getRollData();
+    let rollString = ""
+    let traitsLabel = ""
+
+    if (this.type === "weapon") {
+      rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack;
+
+      // Create label to show weapon traits
+      rollData.item.traits.forEach(v => {
+        let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].label);
+        let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].description);
+        let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraitsTypes[v.type]);
+        traitsLabel += `<h3>${traitName} (${type})</h3><p>${description}</p>`
       });
-    }
-    // Otherwise, create a roll and send a chat message from it.
-    else {
-      // Retrieve roll data.
-      const rollData = this.getRollData();
-      let rollString = ""
-      let traitsLabel = ""
-
-      if (this.type === "weapon") {
-        rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack;
-
-        // Create label to show weapon traits
-        rollData.item.traits.forEach(v => {
-          let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].label);
-          let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].description);
-          let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraitsTypes[v.type]);
-          traitsLabel += `<h3>${traitName} (${type})</h3><p>${description}</p>`
-        });
-      }
-      else {
-        rollString = rollData.item.dice;
-      }
       // Invoke the roll and submit it to chat.
       const roll = new Roll(rollString, rollData);
 
@@ -79,6 +66,7 @@ export class ForMoriaItem extends Item {
         rollMode: rollMode,
         flavor: label + traitsLabel,
       });
+
       // Damage calculations
       let totaldamage = this.calculateDamage(rollData.item, result.total)
       ChatMessage.create({
@@ -87,7 +75,30 @@ export class ForMoriaItem extends Item {
         flavor: label,
         content: `${game.i18n.localize('FORMORIA.Damage')}: ` + totaldamage
       });
+
       return roll;
+    }
+
+    if (this.type === "protection") {
+      // Create label to show weapon traits
+      rollData.item.traits.forEach(v => {
+        let traitName = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].label);
+        let description = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[v.name].description);
+        let type = game.i18n.localize(CONFIG.FORMORIA.weaponTraitsTypes[v.type]);
+        traitsLabel += `<h3>${traitName} (${type})</h3><p>${description}</p>`
+      });
+
+      let defenseLabel = `<h4>${game.i18n.localize('FORMORIA.Defence')}: ${rollData.item.defence}</h4>
+      <h4>${game.i18n.localize('FORMORIA.Durability')}: ${rollData.item.durability.current}/ ${rollData.item.durability.max}</h4>`
+
+      ChatMessage.create({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label + traitsLabel + defenseLabel,
+        content: ""
+      });
+
+      return
     }
   }
 
