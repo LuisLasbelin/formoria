@@ -1,7 +1,8 @@
 {
     "Actor": {
         "types": [
-            "character"
+            "character",
+            "enemy"
         ],
         "character": {
             "background": {
@@ -47,6 +48,16 @@
                 "value": 0
             },
             "weapon": []
+        },
+        "enemy": {
+            "danger": "veryeasy",
+            "menace": 0,
+            "protection": 0,
+            "stamina": {
+                "min": 0,
+                "max": 4,
+                "value": 4
+            }
         }
     },
     "Item": {
@@ -57,14 +68,12 @@
             "protection"
         ],
         "item": {
-            "name": "",
             "dice": {
-                "max":"d4",
-                "current":"d4"
+                "max": "d4",
+                "current": "d4"
             }
         },
         "weapon": {
-            "name": "",
             "skill": "brawn",
             "attack": "0",
             "damage": "0",
@@ -72,7 +81,6 @@
             "traits": []
         },
         "protection": {
-            "name": "",
             "defence": "0",
             "durability": {
                 "min": 0,

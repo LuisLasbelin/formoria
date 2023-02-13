@@ -81,3 +81,30 @@ FORMORIA.dice = [
   "d10",
   "d12"
 ];
+
+FORMORIA.danger = {
+  "veryeasy": {
+    "label": "FORMORIA.VeryEasy",
+    "value": 3
+  },
+  "easy": {
+    "label": "FORMORIA.Easy",
+    "value": 6
+  },
+  "normal": {
+    "label": "FORMORIA.Normal",
+    "value": 10
+  },
+  "dangerous": {
+    "label": "FORMORIA.Dangerous",
+    "value": 15
+  },
+  "beast": {
+    "label": "FORMORIA.Beast",
+    "value": 20
+  },
+  "legendary": {
+    "label": "FORMORIA.Legendary",
+    "value": 30
+  }
+}
