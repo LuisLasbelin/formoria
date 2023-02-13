@@ -72,5 +72,15 @@
       "label" : "2M",
       "description": "Debe empuñarse con 2 manos."
     }
-  }
+  },
+  "FORMORIA.Menace": "Amenaza",
+  "FORMORIA.Danger": "Peligro",
+  "FORMORIA.Protection": "Protección",
+  "FORMORIA.Stamina": "Aguante",
+  "FORMORIA.VeryEasy": "Muy Fácil",
+  "FORMORIA.Easy": "Fácil",
+  "FORMORIA.Normal": "Moderada",
+  "FORMORIA.Dangerous": "Peligrosa",
+  "FORMORIA.Beast": "Bestial",
+  "FORMORIA.Legendary": "Legendaria"
 }

@@ -35,8 +35,6 @@ export class ForMoriaActorSheet extends ActorSheet {
     // Use a safe clone of the actor data for further operations.
     const actorData = this.actor.toObject(false);
 
-    console.log(actorData);
-
     // Add the actor's data to context.data for easier access, as well as flags.
     context.system = actorData.system;
     context.flags = actorData.flags;
@@ -46,12 +44,17 @@ export class ForMoriaActorSheet extends ActorSheet {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
+    if (actorData.type == 'enemy') {
+      this._prepareEnemy(context);
+    }
 
     // Add roll data for TinyMCE editors.
     context.rollData = context.actor.getRollData();
 
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(this.actor.effects);
+
+    console.log(actorData);
 
     return context;
   }
@@ -99,7 +102,7 @@ export class ForMoriaActorSheet extends ActorSheet {
       if (i.type === 'weapon') {
         i.system.skillLabel = game.i18n.localize(CONFIG.FORMORIA.skills[i.system.skill]) ?? i.system.skill;
         i.system.traits.forEach(trait => {
-            trait.label = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[trait.name].label)
+          trait.label = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[trait.name].label)
         });
         weapons.push(i);
       }
@@ -121,6 +124,21 @@ export class ForMoriaActorSheet extends ActorSheet {
     context.gear = gear;
     context.weapons = weapons;
     context.features = features;
+  }
+
+  _prepareEnemy(context) {
+    let dangers = {}
+    // Add danger to enemy creation
+    for (let [k, v] of Object.entries(CONFIG.FORMORIA.danger)) {
+      dangers[k] = {
+        "label": game.i18n.localize(CONFIG.FORMORIA.danger[k].label) ?? k,
+        "value": CONFIG.FORMORIA.danger[k].value
+      }
+    }
+    // add to the sheet
+    context.dangers = dangers
+    context.danger = dangers[context.system.danger]
+    console.log("Enemy prepared")
   }
 
   /* -------------------------------------------- */
@@ -225,10 +243,10 @@ export class ForMoriaActorSheet extends ActorSheet {
         let chatData = {
           user: game.user._id,
           speaker: this.actor.name,
-          content : `<h2>${this.actor.name}</h2><p>${message}</p>`
-          };
-        
-        ChatMessage.create(chatData,{});
+          content: `<h2>${this.actor.name}</h2><p>${message}</p>`
+        };
+
+        ChatMessage.create(chatData, {});
       }
 
       if (dataset.rollType == 'skill') {
@@ -247,14 +265,14 @@ export class ForMoriaActorSheet extends ActorSheet {
         });
 
         let roll
-        const t1 = new Die({number: 1, faces: parseInt(this.actor.system.skills[dataset.skill].current.split("d")[1])});
-        if(mod > 0) {
-          const plus = new OperatorTerm({operator: "+"});
-          const t2 = new NumericTerm({number: mod});
+        const t1 = new Die({ number: 1, faces: parseInt(this.actor.system.skills[dataset.skill].current.split("d")[1]) });
+        if (mod > 0) {
+          const plus = new OperatorTerm({ operator: "+" });
+          const t2 = new NumericTerm({ number: mod });
           roll = Roll.fromTerms([t1, plus, t2]);
         }
-        else if(mod < 0) {
-          const t2 = new NumericTerm({number: mod});
+        else if (mod < 0) {
+          const t2 = new NumericTerm({ number: mod });
           roll = Roll.fromTerms([t1, t2]);
         }
         else {
