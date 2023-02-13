@@ -2,7 +2,7 @@
   "id": "formoria",
   "title": "For Moria!",
   "description": "For Moria system for Foundry VTT.",
-  "version": "0.3.13022023",
+  "version": "0.4.13022023",
   "compatibility": {
     "minimum": 10,
     "verified": "10.287",
