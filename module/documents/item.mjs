@@ -89,7 +89,7 @@ export class ForMoriaItem extends Item {
       });
 
       let defenseLabel = `<h4>${game.i18n.localize('FORMORIA.Defence')}: ${rollData.item.defence}</h4>
-      <h4>${game.i18n.localize('FORMORIA.Durability')}: ${rollData.item.durability.current}/ ${rollData.item.durability.max}</h4>`
+      <h4>${game.i18n.localize('FORMORIA.Durability')}: ${rollData.item.durability.value}/ ${rollData.item.durability.max}</h4>`
 
       ChatMessage.create({
         speaker: speaker,
@@ -98,9 +98,25 @@ export class ForMoriaItem extends Item {
         content: ""
       });
 
-      return
+      return;
     }
-  }
+
+    // if it is not a weapon or an armor
+    // then use the formula to roll
+    if(this.type === "item") {
+      rollString = item.system.formula
+      // Invoke the roll and submit it to chat.
+      const roll = new Roll(rollString, rollData);
+  
+      roll.toMessage({
+        speaker: speaker,
+        rollMode: rollMode,
+        flavor: label
+      });
+
+      return;
+    }
+  } // roll()
 
   calculateDamage(item, result) {
     // Damage calculations
