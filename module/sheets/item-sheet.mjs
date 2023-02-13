@@ -34,6 +34,7 @@ export class ForMoriaItemSheet extends ItemSheet {
 
     // Use a safe clone of the item data for further operations.
     const itemData = context.item;
+    const dice = CONFIG.FORMORIA.dice
 
     // Retrieve the roll data for TinyMCE editors.
     context.rollData = {};
@@ -77,6 +78,8 @@ export class ForMoriaItemSheet extends ItemSheet {
     // Add the actor's data to context.data for easier access, as well as flags.
     itemData.system.weaponTraits = weaponTraits;
     itemData.system.skills = skills
+    
+    context.dice = dice;
     context.system = itemData.system;
     context.flags = itemData.flags;
     console.log(context.system)
