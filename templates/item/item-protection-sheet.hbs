@@ -3,23 +3,13 @@
     <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     <div class="header-fields">
       <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
-      <div class="grid grid-2col">
-        <div class="resource">
-          <label class="resource-label">Quantity</label>
-          <input type="text" name="system.quantity" value="{{system.quantity}}" data-dtype="Number" />
-        </div>
-        <div class="resource">
-          <label class="resource-label">Weight</label>
-          <input type="text" name="system.weight" value="{{system.weight}}" data-dtype="Number" />
-        </div>
-      </div>
     </div>
   </header>
 
   {{!-- Sheet Tab Navigation --}}
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="attributes">Attributes</a>
+    <a class="item" data-tab="description">{{localize "FORMORIA.Description"}}</a>
+    <a class="item" data-tab="attributes">{{localize "FORMORIA.Attributes"}}</a>
   </nav>
 
   {{!-- Sheet Body --}}
@@ -35,32 +25,59 @@
 
     {{!-- Attributes Tab --}}
     <div class="tab attributes" data-group="primary" data-tab="attributes">
-      {{!-- As you add new fields, add them in here! --}}
-      <div class="resource">
-        <label class="resource-label">{{localize 'FORMORIA.Defence'}}</label>
-        <input type="text" name="system.defence" value="{{system.defence}}" data-dtype="String" />
-      </div>
-      <div class="resource">
-        <label class="resource-label">{{localize 'FORMORIA.Durability'}}</label>
-        <input type="text" name="system.durability" value="{{system.durability}}" data-dtype="String" />
-      </div>
-      <div class="resource">
-        <label class="resource-label">{{localize 'FORMORIA.Modifiers'}}</label>
-        {{#each system.modifiers}}
-        <div class="resource modifier">
-          <select class="selectattribute" name="system.modifiers.{{@index}}.mod" data-type="String">
-            {{#select this.mod}}
-            {{#each ../system.skills as |sk key|}}
-            <option value="{{key}}">{{sk.label}}</option>
-            {{/each}}
-            {{/select}}
-          </select>
-          <input type="text" name="system.modifiers.{{@index}}.value" value="{{this.value}}" data-dtype="String" />
+      <div class="grid col-2">
+        <div>
+          <div class="resource">
+            <label class="resource-label">{{localize 'FORMORIA.Defence'}}</label>
+            <input type="text" name="system.defence" value="{{system.defence}}" data-dtype="String" />
+          </div>
+          <div class="resource">
+            <label class="resource-label">{{localize 'FORMORIA.Durability'}}</label>
+            <div class="flexrow">
+            <input type="text" name="system.durability.value" value="{{system.durability.value}}" data-dtype="String" />
+            <span>/</span>
+            <input type="text" name="system.durability.max" value="{{system.durability.max}}" data-dtype="String" />
+            </div>
+          </div>
+          <div class="resource">
+            <label class="resource-label">{{localize 'FORMORIA.Modifiers'}}</label>
+            <div class="resource">
+              <select class="selectattribute" id="mod-skill" data-type="String">
+                {{#each system.skills as |sk key|}}
+                <option value="{{key}}">{{sk.label}}</option>
+                {{/each}}
+              </select>
+              <input type="text" id="mod-value" value="{{this.value}}" data-dtype="String" />
+            </div>
+            <a class="item-control mod-create" title="Add modifier"><i class="fas fa-plus"></i>{{localize
+              'FORMORIA.Add'}}</a>
+            <a class="item-control mod-delete" title="Remove modifier"><i class="fas fa-trash"></i></a>
+          </div>
+          {{#each system.modifiers as |mod id|}}
+          <div class="resource modifier">
+            <h3>{{mod.label}} {{mod.value}}</h3>
+          </div>
+          {{/each}}
         </div>
-        {{/each}}
-        <a class="item-control mod-create" title="Add modifier"><i class="fas fa-plus"></i>{{localize 'FORMORIA.Add'}}</a>
-        <a class="item-control mod-delete" title="Remove modifier"><i class="fas fa-trash"></i></a>
+        <div><label class="resource-label">{{localize "FORMORIA.Traits"}}</label>
+          <select class="selectattribute" id="trait-selector" data-type="String">
+            {{#each system.weaponTraits as |trt key|}}
+            <option value="{{trt.key}}">{{trt.label}}</option>
+            {{/each}}
+          </select>
+          <a class="item-control trait-create" title="Add trait"><i class="fas fa-plus"></i></a>
+          <a class="item-control trait-remove" title="Remove trait"><i class="fas fa-trash"></i></a>
+          {{#each system.traits as |trait id|}}
+          <div class="trait-box" list-value="{{id}}">
+            <h3>{{trait.label}}</h3>
+            <p>{{trait.typeLabel}}</p>
+            <p>{{trait.descriptionLabel}}</p>
+          </div>
+          {{/each}}
+        </div>
       </div>
+      {{!-- As you add new fields, add them in here! --}}
+
     </div>
   </section>
 </form>

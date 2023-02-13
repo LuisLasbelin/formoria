@@ -64,11 +64,6 @@ export class ForMoriaActorSheet extends ActorSheet {
    * @return {undefined}
    */
   _prepareCharacterData(context) {
-    // Handle motivations labels.
-    /*
-    for (let [k, v] of Object.entries(context.system.motivations)) {
-      v.label = game.i18n.localize(CONFIG.FORMORIA.motivations[k]) ?? k;
-    }*/
     // Handle skills labels.
     for (let [k, v] of Object.entries(context.system.skills)) {
       v.label = game.i18n.localize(CONFIG.FORMORIA.skills[k]) ?? k;
@@ -103,9 +98,15 @@ export class ForMoriaActorSheet extends ActorSheet {
       }
       if (i.type === 'weapon') {
         i.system.skillLabel = game.i18n.localize(CONFIG.FORMORIA.skills[i.system.skill]) ?? i.system.skill;
+        i.system.traits.forEach(trait => {
+            trait.label = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[trait.name].label)
+        });
         weapons.push(i);
       }
       if (i.type === 'protection') {
+        i.system.traits.forEach(trait => {
+          trait.label = game.i18n.localize(CONFIG.FORMORIA.weaponTraits[trait.name].label)
+        });
         protections.push(i);
       }
       // Append to features.
@@ -212,7 +213,7 @@ export class ForMoriaActorSheet extends ActorSheet {
         if (item) return item.roll();
       }
 
-      if (dataset.rollType == 'weapon') {
+      if (dataset.rollType == 'weapon' || dataset.rollType == "protection") {
         console.log("Rolling weapon")
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);
