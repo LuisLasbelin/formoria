@@ -82,5 +82,8 @@
   "FORMORIA.Normal": "Moderada",
   "FORMORIA.Dangerous": "Peligrosa",
   "FORMORIA.Beast": "Bestial",
-  "FORMORIA.Legendary": "Legendaria"
+  "FORMORIA.Legendary": "Legendaria",
+  "FORMORIA.msgRestoredSkills": "¡Ha restaurado sus habilidades!",
+  "FORMORIA.Restore": "Restaurar",
+  "FORMORIA.Edit": "Editar habilidades"
 }

@@ -6,6 +6,8 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/
  */
 export class ForMoriaActorSheet extends ActorSheet {
 
+
+
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -74,6 +76,10 @@ export class ForMoriaActorSheet extends ActorSheet {
     // Hanlde skill iconss
     for (let [k, v] of Object.entries(context.system.skills)) {
       v.icon = CONFIG.FORMORIA.skillIcons[k] ?? k;
+      // set dice icons in the skill
+      CONFIG.FORMORIA.dice.forEach(dice => {
+        if(dice.label == v.max) v.diceIcon = dice.icon
+      });
     }
   }
 
@@ -175,6 +181,10 @@ export class ForMoriaActorSheet extends ActorSheet {
     // Rollable abilities.
     html.find('.rollable').click(this._onRoll.bind(this));
 
+    // Restore and edit skills button
+    html.find('.restore').click(this._onRestorePressed.bind(this))
+    html.find('.edit').click(this._onEditPressed.bind(this))
+
     // Drag events for macros.
     if (this.actor.isOwner) {
       let handler = ev => this._onDragStart(ev);
@@ -184,6 +194,73 @@ export class ForMoriaActorSheet extends ActorSheet {
         li.addEventListener("dragstart", handler, false);
       });
     }
+  }
+
+  /**
+   * Handle restoration of skills and stunt when someone uses battle cry
+   * @param {*} event 
+   */
+  _onRestorePressed(event) {
+    event.preventDefault();
+    
+    let skills = this.actor.system.skills
+    console.log(skills)
+    for (const key in skills) {
+      skills[key].current = skills[key].max
+    }
+    this.actor.update({["system.skills"]: skills});
+    this.actor.update({["system.stunt"]: true})
+
+    let chatData = {
+      user: game.user._id,
+      speaker: this.actor.name,
+      content: `<h2>${this.actor.name}</h2><p>${game.i18n.localize('FORMORIA.msgRestoredSkills')}</p>`
+    };
+    ChatMessage.create(chatData, {});
+  }
+
+  async _onEditPressed(event) {
+    event.preventDefault();
+
+    const formData = await this.handleEditSkillsDialog()
+    // when it is finished and update the actor
+    for (const key in formData) {
+      this.actor.update({[`system.skills.${key}.max`]: formData[key]})
+    }
+  }
+
+  async handleEditSkillsDialog() {
+
+    this._prepareCharacterData(this.actor)
+
+    const data = {
+      system: this.actor.system,
+      dice: CONFIG.FORMORIA.dice,
+      skills: this.actor.system.skills
+    }
+
+    const editSkillsDialog = await renderTemplate('systems/formoria/templates/actor/parts/actor-skills-edit.hbs', data);
+
+    return new Promise((resolve, reject) => {
+      new Dialog({
+        title: "Edit Skills",
+        content: editSkillsDialog,
+        buttons: {
+          submit: { label: "Submit", callback: (html) => {
+            const formData = new FormDataExtended(html[0].querySelector('form')).toObject()
+
+            resolve(formData);
+          } },
+          cancel: { label: "Cancel", callback: (html) => {reject("Editing cancel")} },
+        },
+        render: (html) => {
+          for (const key in this.actor.system.skills) {
+            let input = html[0].querySelector(`[name="${key}"]`)
+            input.value = this.actor.system.skills[key].max
+          }
+        },
+      }).render(true)
+    })
   }
 
   /**

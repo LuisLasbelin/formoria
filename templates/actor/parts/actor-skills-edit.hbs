@@ -1,0 +1,13 @@
+<form>
+{{#each system.skills as |skill id|}}
+    <div class="flex-group-center encapsule">
+        <div class="flexrow">
+            <p>{{skill.label}}</p>
+            <select name="{{id}}" class="selectattribute" data-type="String">
+                {{#each ../dice as |d did|}}
+                <option value="{{d.label}}">{{d.label}}</option>
+                {{/each}}
+            </select>
+        </div>
+{{/each}}
+</form>
