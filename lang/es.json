@@ -86,6 +86,13 @@
   "FORMORIA.msgRestoredSkills": "¡Ha restaurado sus habilidades!",
   "FORMORIA.Restore": "Restaurar",
   "FORMORIA.Edit": "Editar habilidades",
-  "FORMORIA.GlobalSkillsModifier": "Global Skills Modifier",
-  "FORMORIA.Loot": "Botín"
+  "FORMORIA.GlobalSkillsModifier": "Modificador Global de Habilidades",
+  "FORMORIA.Loot": "Botín",
+
+  "FORMORIA.Loot1": "¡Cuidado! Ha sido un fracaso.",
+  "FORMORIA.Loot2": "Solo objetos rotos o sin utilidad.",
+  "FORMORIA.Loot15": "Encuentras un objeto d6.",
+  "FORMORIA.Loot17": "Encuentras un objeto d8.",
+  "FORMORIA.Loot19": "Encuentras un objeto d10 o cerveza para rellenar tu pinta.",
+  "FORMORIA.Loot21": "¡Tesoro! Encuentras un objeto de misión o de mithril (d12)."
 }

@@ -6,8 +6,6 @@ import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/
  */
 export class ForMoriaActorSheet extends ActorSheet {
 
-
-
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
@@ -78,7 +76,7 @@ export class ForMoriaActorSheet extends ActorSheet {
       v.icon = CONFIG.FORMORIA.skillIcons[k] ?? k;
       // set dice icons in the skill
       CONFIG.FORMORIA.dice.forEach(dice => {
-        if(dice.label == v.max) v.diceIcon = dice.icon
+        if (dice.label == v.max) v.diceIcon = dice.icon
       });
     }
   }
@@ -202,14 +200,14 @@ export class ForMoriaActorSheet extends ActorSheet {
    */
   _onRestorePressed(event) {
     event.preventDefault();
-    
+
     let skills = this.actor.system.skills
     console.log(skills)
     for (const key in skills) {
       skills[key].current = skills[key].max
     }
-    this.actor.update({["system.skills"]: skills});
-    this.actor.update({["system.stunt"]: true})
+    this.actor.update({ ["system.skills"]: skills });
+    this.actor.update({ ["system.stunt"]: true })
 
     let chatData = {
       user: game.user._id,
@@ -225,7 +223,7 @@ export class ForMoriaActorSheet extends ActorSheet {
     const formData = await this.handleEditSkillsDialog()
     // when it is finished and update the actor
     for (const key in formData) {
-      this.actor.update({[`system.skills.${key}.max`]: formData[key]})
+      this.actor.update({ [`system.skills.${key}.max`]: formData[key] })
     }
   }
 
@@ -246,12 +244,14 @@ export class ForMoriaActorSheet extends ActorSheet {
         title: "Edit Skills",
         content: editSkillsDialog,
         buttons: {
-          submit: { label: "Submit", callback: (html) => {
-            const formData = new FormDataExtended(html[0].querySelector('form')).toObject()
+          submit: {
+            label: "Submit", callback: (html) => {
+              const formData = new FormDataExtended(html[0].querySelector('form')).toObject()
 
-            resolve(formData);
-          } },
-          cancel: { label: "Cancel", callback: (html) => {reject("Editing cancel")} },
+              resolve(formData);
+            }
+          },
+          cancel: { label: "Cancel", callback: (html) => { reject("Editing cancel") } },
         },
         render: (html) => {
           for (const key in this.actor.system.skills) {
@@ -295,7 +295,7 @@ export class ForMoriaActorSheet extends ActorSheet {
    * @param {Event} event   The originating click event
    * @private
    */
-  _onRoll(event) {
+  async _onRoll(event) {
     event.preventDefault();
     const element = event.currentTarget;
     const dataset = element.dataset;
@@ -304,9 +304,13 @@ export class ForMoriaActorSheet extends ActorSheet {
     if (dataset.rollType) {
       if (dataset.rollType == "loot") {
         let roll = new Roll(`1d20+${this.actor.system.modifiers.loot}`);
+        // Store the result
+        let result = await roll.roll({ async: true });
+        // Check in the FORMORIA.Loot object which result is it
+        let resultText = this.checkLoot(result);
         roll.toMessage({
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: "Loots the room!",
+          flavor: `<h3>${resultText}</h3>`,
           rollMode: game.settings.get('core', 'rollMode'),
         });
         return;
@@ -393,5 +397,22 @@ export class ForMoriaActorSheet extends ActorSheet {
       });
       return roll;
     }
+  }
+
+  checkLoot(rollresult) {
+    let lastkey = ""
+    console.log(rollresult)
+    for (const key in CONFIG.FORMORIA.loot) {
+      if (rollresult.total < key) {
+        if (lastkey != "") {
+          return game.i18n.localize(CONFIG.FORMORIA.loot[lastkey].result)
+        } else {
+          return game.i18n.localize(CONFIG.FORMORIA.loot["1"].result)
+        }
+      }
+      // if not, save the last key
+      lastkey = key
+    }
+    return game.i18n.localize(CONFIG.FORMORIA.loot["21"].result)
   }
 }

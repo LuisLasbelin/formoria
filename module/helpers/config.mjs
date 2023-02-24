@@ -123,3 +123,24 @@ FORMORIA.danger = {
     "value": 30
   }
 }
+
+FORMORIA.loot = {
+  "1": {
+    "result": "FORMORIA.Loot1"
+  },
+  "2": {
+    "result": "FORMORIA.Loot2"
+  },
+  "15": {
+    "result": "FORMORIA.Loot15"
+  },
+  "17": {
+    "result": "FORMORIA.Loot17"
+  },
+  "19": {
+    "result": "FORMORIA.Loot19"
+  },
+  "21": {
+    "result": "FORMORIA.Loot21"
+  }
+}
