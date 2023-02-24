@@ -32,7 +32,7 @@
   "primaryTokenAttribute": "stress",
   "url": "https://github.com/Luistorch/formoria",
   "manifest": "https://raw.githubusercontent.com/Luistorch/formoria/master/system.json",
-  "download": "https://github.com/Luistorch/formoria/archive/refs/tags/v0.5.zip",
+  "download": "https://github.com/Luistorch/formoria/archive/refs/tags/v0.5b.zip",
   "license": "LICENSE.txt",
   "changelog": "CHANGELOG.md"
 }
