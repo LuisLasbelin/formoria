@@ -85,5 +85,7 @@
   "FORMORIA.Legendary": "Legendaria",
   "FORMORIA.msgRestoredSkills": "¡Ha restaurado sus habilidades!",
   "FORMORIA.Restore": "Restaurar",
-  "FORMORIA.Edit": "Editar habilidades"
+  "FORMORIA.Edit": "Editar habilidades",
+  "FORMORIA.GlobalSkillsModifier": "Global Skills Modifier",
+  "FORMORIA.Loot": "Botín"
 }

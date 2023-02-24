@@ -39,6 +39,10 @@
                     "current": "d4"
                 }
             },
+            "modifiers": {
+                "danger": 0,
+                "loot": 0
+            },
             "beer": true,
             "items": [],
             "stunt": true,

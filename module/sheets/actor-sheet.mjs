@@ -302,6 +302,16 @@ export class ForMoriaActorSheet extends ActorSheet {
 
     // Handle item rolls.
     if (dataset.rollType) {
+      if (dataset.rollType == "loot") {
+        let roll = new Roll(`1d20+${this.actor.system.modifiers.loot}`);
+        roll.toMessage({
+          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+          flavor: "Loots the room!",
+          rollMode: game.settings.get('core', 'rollMode'),
+        });
+        return;
+      }
+
       if (dataset.rollType == 'item') {
         const itemId = element.closest('.item').dataset.itemId;
         const item = this.actor.items.get(itemId);
@@ -346,14 +356,20 @@ export class ForMoriaActorSheet extends ActorSheet {
         if (mod > 0) {
           const plus = new OperatorTerm({ operator: "+" });
           const t2 = new NumericTerm({ number: mod });
-          roll = Roll.fromTerms([t1, plus, t2]);
+          const minus = new OperatorTerm({ operator: "-" });
+          const t3 = new NumericTerm({ number: this.actor.system.modifiers.danger });
+          roll = Roll.fromTerms([t1, plus, t2, minus, t3]);
         }
         else if (mod < 0) {
           const t2 = new NumericTerm({ number: mod });
-          roll = Roll.fromTerms([t1, t2]);
+          const minus = new OperatorTerm({ operator: "-" });
+          const t3 = new NumericTerm({ number: this.actor.system.modifiers.danger });
+          roll = Roll.fromTerms([t1, t2, minus, t3]);
         }
         else {
-          roll = Roll.fromTerms([t1]);
+          const minus = new OperatorTerm({ operator: "-" });
+          const t3 = new NumericTerm({ number: this.actor.system.modifiers.danger });
+          roll = Roll.fromTerms([t1, minus, t3]);
         }
 
         let label = dataset.label;
