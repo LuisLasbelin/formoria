@@ -47,7 +47,7 @@ export class ForMoriaItem extends Item {
     let traitsLabel = ""
 
     if (this.type === "weapon") {
-      rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack;
+      rollString = this.actor.system.skills[rollData.item.skill].current + "+" + rollData.item.attack + "-" + this.actor.system.modifiers.danger;
 
       // Create label to show weapon traits
       rollData.item.traits.forEach(v => {

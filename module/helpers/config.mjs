@@ -75,11 +75,26 @@ FORMORIA.weaponTraitsTypes = {
  * @type {Object}
  */
 FORMORIA.dice = [
-  "d4",
-  "d6",
-  "d8",
-  "d10",
-  "d12"
+  {
+    "label": "d4",
+    "icon": "systems/formoria/assets/d4.svg"
+  },
+  {
+    "label": "d6",
+    "icon": "systems/formoria/assets/perspective-dice-six-faces-six.svg"
+  },
+  {
+    "label": "d8",
+    "icon": "systems/formoria/assets/dice-eight-faces-eight.svg"
+  },
+  {
+    "label": "d10",
+    "icon": "systems/formoria/assets/d10.svg"
+  },
+  {
+    "label": "d12",
+    "icon": "systems/formoria/assets/d12.svg"
+  }
 ];
 
 FORMORIA.danger = {

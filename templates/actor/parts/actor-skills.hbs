@@ -5,23 +5,18 @@
             <h3>{{skill.label}}</h3>
             <div class="flexrow">
                 <span class="skill-image">
-                    <a class="rollable" data-roll-type="skill" data-skill="{{id}}" data-label="<h2>{{skill.label}}</h2>"><img class="skill-icon"
-                            src="{{skill.icon}}" title="{{skill.label}}" /></a>
+                    <a class="rollable" data-roll-type="skill" data-skill="{{id}}"
+                        data-label="<h2>{{skill.label}}</h2>">
+                        <img class="skill-icon" src="{{skill.icon}}" title="{{skill.label}}" /></a>
                 </span>
                 <p>{{localize 'FORMORIA.Max'}}</p>
-                <select class="selectattribute" name="system.skills.{{id}}.max" data-type="String">
-                    {{#select skill.max}}
-                    {{#each ../dice as |d did|}}
-                    <option value="{{d}}">{{d}}</option>
-                    {{/each}}
-                    {{/select}}
-                </select>
+                <img class="skill-icon" src="{{skill.diceIcon}}" alt="{{skill.max}}">
 
                 <p>{{localize 'FORMORIA.Current'}}</p>
                 <select class="selectattribute" name="system.skills.{{id}}.current" data-type="String">
                     {{#select skill.current}}
                     {{#each ../dice as |d did|}}
-                    <option value="{{d}}">{{d}}</option>
+                    <option value="{{d.label}}">{{d.label}}</option>
                     {{/each}}
                     {{/select}}
                 </select>
@@ -30,4 +25,9 @@
     </div>
     {{/each}}
 </section>
+<div class="grid-2col">
+    <button class="restore">{{localize 'FORMORIA.Restore'}}</button>
+    <button class="edit">{{localize 'FORMORIA.Edit'}}</button>
+</div>
+
 <p>Asigna un valor de d10, uno de d8 y tres de d6 a las habilidades sin repetir. La sobrante tendrá un valor de d4.</p>

@@ -30,7 +30,7 @@
       <select class="selectattribute" name="system.formula" data-type="String">
         {{#select system.formula}}
         {{#each dice as |d did|}}
-        <option value="{{d}}">{{d}}</option>
+        <option value="{{d.label}}">{{d.label}}</option>
         {{/each}}
         {{/select}}
       </select>
